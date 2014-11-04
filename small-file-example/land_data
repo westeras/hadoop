@@ -9,7 +9,7 @@ f = open(file_name, 'w')
 
 for i in range(0, lines):
 	number_list = [random.randint(0, 100) for i in range(0, 5)]
-	line = "{0},{1},{2},{3},{4}".format(*number_list)
+	line = "{0},{1},{2},{3},{4}\n".format(*number_list)
 	f.write(line)
 
 f.close()
