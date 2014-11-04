@@ -5,7 +5,7 @@
 
 	<action name="move-files-to-staging">
 		<fs>
-            <move source="${nameNode}/user/${wf:user()}/${landingDir}/*" target="${nameNode}/user/${wf:user()}/${stagingDir}" />
+            <move source="${nameNode}/user/${wf:user()}/${landingDir}/*" target="/user/${wf:user()}/${stagingDir}" />
         </fs>
 		<ok to="create-external-table" />
 		<error to="fail" />
@@ -46,7 +46,7 @@
 
 	<action name="move-files-to-storage">
 		<fs>
-            <move source="${nameNode}/user/${wf:user()}/${stagingDir}/*" target="${nameNode}/user/${wf:user()}/${storageDir}" />
+            <move source="${nameNode}/user/${wf:user()}/${stagingDir}/*" target="/user/${wf:user()}/${storageDir}" />
         </fs>
 		<ok to="end" />
 		<error to="fail" />
