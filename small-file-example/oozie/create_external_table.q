@@ -8,4 +8,4 @@ CREATE EXTERNAL TABLE external_staging_temporary (
 	ROW FORMAT DELIMITED
 		FIELDS TERMINATED BY ','
 
-	LOCATION '/user/root/temporary/';
+	LOCATION '${STAGING}';

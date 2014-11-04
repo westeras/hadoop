@@ -2,8 +2,8 @@
 	<start to="move-files-to-staging"/>
 	<action name="move-files-to-staging">
 		<fs>
-			<move source="/user/${user_name}/${landing_dir}/*" target="/user/${user_name}/${staging_dir}" />
-		</fs>
+            <move source="/user/${wf:user()}/${landingDir}/*" target="/user/${wf:user()}/${stagingDir}" />
+        </fs>
 		<ok to="create-external-table" />
 		<error to="fail" />
 	</action>
@@ -11,20 +11,15 @@
 		<hive xmlns="uri:oozie:hive-action:0.2">
 			<job-tracker>${jobTracker}</job-tracker>
 			<name-node>${nameNode}</name-node>
-			<prepare>
-				<delete path="${nameNode}/user/${wf:user()}/${examplesRoot}/output-data/hive"/>
-                <mkdir path="${nameNode}/user/${wf:user()}/${examplesRoot}/output-data"/>
-            </prepare>
             <configuration>
                 <property>
                     <name>mapred.job.queue.name</name>
                     <value>${queueName}</value>
                 </property>
             </configuration>
-            <script>script.q</script>
-            <param>INPUT=/user/${wf:user()}/${examplesRoot}/input-data/table</param>
-            <param>OUTPUT=/user/${wf:user()}/${examplesRoot}/output-data/hive</param>
-        </hive>		
+            <script>create_external_table.q</script>
+        	<param>STAGING=/user/${wf:user()}/${stagingDir}</param>
+		</hive>		
 		<ok to="dump-to-managed-orc-table" />
 		<error to="fail" />
 	</action>
@@ -34,7 +29,9 @@
 		<error to="fail" />
 	</action>
 	<action name="move-files-to-storage">
-
+		<fs>
+            <move source="/user/${wf:user()}/${stagingDir}/*" target="/user/${wf:user()}/${storageDir}" />
+        </fs>
 		<ok to="end" />
 		<error to="fail" />
 	</action>
