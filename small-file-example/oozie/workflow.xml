@@ -1,12 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <workflow-app xmlns="uri:oozie:workflow:0.2" name="handle-file-landing">
 	<start to="move-files-to-staging"/>
+
 	<action name="move-files-to-staging">
 		<fs>
-            <move source="/user/${wf:user()}/${landingDir}/*" target="/user/${wf:user()}/${stagingDir}" />
+            <move source="${nameNode}/user/${wf:user()}/${landingDir}/*" target="${nameNode}/user/${wf:user()}/${stagingDir}" />
         </fs>
 		<ok to="create-external-table" />
 		<error to="fail" />
 	</action>
+
 	<action name="create-external-table">
 		<hive xmlns="uri:oozie:hive-action:0.2">
 			<job-tracker>${jobTracker}</job-tracker>
@@ -23,6 +27,7 @@
 		<ok to="dump-to-managed-orc-table" />
 		<error to="fail" />
 	</action>
+
 	<action name="dump-to-managed-orc-table">
 		<hive xmlns="uri:oozie:hive-action:0.2">
             <job-tracker>${jobTracker}</job-tracker>
@@ -38,9 +43,10 @@
 		<ok to="move-files-to-storage" />
 		<error to="fail" />
 	</action>
+
 	<action name="move-files-to-storage">
 		<fs>
-            <move source="/user/${wf:user()}/${stagingDir}/*" target="/user/${wf:user()}/${storageDir}" />
+            <move source="${nameNode}/user/${wf:user()}/${stagingDir}/*" target="${nameNode}/user/${wf:user()}/${storageDir}" />
         </fs>
 		<ok to="end" />
 		<error to="fail" />
@@ -49,5 +55,6 @@
 	<kill name="fail">
         <message>error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
     </kill>
+
 	<end name="end"/>
 </workflow-app>
