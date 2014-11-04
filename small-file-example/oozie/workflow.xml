@@ -49,4 +49,5 @@
 	<kill name="fail">
         <message>error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
     </kill>
+	<end name="end"/>
 </workflow-app>
