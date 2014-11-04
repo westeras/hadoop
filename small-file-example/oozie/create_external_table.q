@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS external_staging_temporary;
+
 CREATE EXTERNAL TABLE external_staging_temporary (
 	c1	INT,
 	c2	INT,
