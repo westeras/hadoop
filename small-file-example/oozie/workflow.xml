@@ -13,7 +13,7 @@
 
 	<action name="create-new-landing-directory">
 		<fs>
-			<mkdir path="${nameNode}/user/${wf:user()}/${landingDir}"
+			<mkdir path="${nameNode}/user/${wf:user()}/${landingDir}" />
 		</fs>
 		<ok to="create-external-table" />
 		<error to="fail" />
