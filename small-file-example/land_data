@@ -14,5 +14,5 @@ for i in range(0, lines):
 
 f.close()
 
-#hdfs_put = "hdfs dfs -put {0} small-file-example/landing/".format(file_name)
-#os.system(hdfs_put)
+hdfs_put = "hdfs dfs -put {0} small-file-example/landing/".format(file_name)
+os.system(hdfs_put)
