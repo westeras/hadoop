@@ -24,7 +24,17 @@
 		<error to="fail" />
 	</action>
 	<action name="dump-to-managed-orc-table">
-
+		<hive xmlns="uri:oozie:hive-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <script>dump_to_orc.q</script>
+        </hive>
 		<ok to="move-files-to-storage" />
 		<error to="fail" />
 	</action>
