@@ -7,6 +7,14 @@
 		<fs>
             <move source="${nameNode}/user/${wf:user()}/${landingDir}" target="/user/${wf:user()}/${stagingDir}" />
         </fs>
+		<ok to="create-new-landing-directory" />
+		<error to="fail" />
+	</action>
+
+	<action name="create-new-landing-directory">
+		<fs>
+			<mkdir path="${nameNode}/user/${wf:user()}/${landingDir}"
+		</fs>
 		<ok to="create-external-table" />
 		<error to="fail" />
 	</action>
