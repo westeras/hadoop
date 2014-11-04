@@ -16,3 +16,5 @@ f.close()
 
 hdfs_put = "hdfs dfs -put {0} small-file-example/landing/".format(file_name)
 os.system(hdfs_put)
+
+os.system("rm {0}".format(file_name)
