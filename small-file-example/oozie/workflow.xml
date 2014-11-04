@@ -1,0 +1,45 @@
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="handle-file-landing">
+	<start to="move-files-to-staging"/>
+	<action name="move-files-to-staging">
+		<fs>
+			<move source="/user/${user_name}/${landing_dir}/*" target="/user/${user_name}/${staging_dir}" />
+		</fs>
+		<ok to="create-external-table" />
+		<error to="fail" />
+	</action>
+	<action name="create-external-table">
+		<hive xmlns="uri:oozie:hive-action:0.2">
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<prepare>
+				<delete path="${nameNode}/user/${wf:user()}/${examplesRoot}/output-data/hive"/>
+                <mkdir path="${nameNode}/user/${wf:user()}/${examplesRoot}/output-data"/>
+            </prepare>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <script>script.q</script>
+            <param>INPUT=/user/${wf:user()}/${examplesRoot}/input-data/table</param>
+            <param>OUTPUT=/user/${wf:user()}/${examplesRoot}/output-data/hive</param>
+        </hive>		
+		<ok to="dump-to-managed-orc-table" />
+		<error to="fail" />
+	</action>
+	<action name="dump-to-managed-orc-table">
+
+		<ok to="move-files-to-storage" />
+		<error to="fail" />
+	</action>
+	<action name="move-files-to-storage">
+
+		<ok to="end" />
+		<error to="fail" />
+	</action>
+	
+	<kill name="fail">
+        <message>error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+</workflow-app>
