@@ -31,6 +31,7 @@
             </configuration>
             <script>create_external_table.q</script>
         	<param>STAGING=/user/${wf:user()}/${stagingDir}</param>
+			<job-xml>hive-site.xml</job-xml>
 		</hive>		
 		<ok to="dump-to-managed-orc-table" />
 		<error to="fail" />
@@ -47,6 +48,7 @@
                 </property>
             </configuration>
             <script>dump_to_orc.q</script>
+			<job-xml>hive-site.xml</job-xml>
         </hive>
 		<ok to="move-files-to-storage" />
 		<error to="fail" />
