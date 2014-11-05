@@ -6,7 +6,7 @@
 	<decision name="check-if-dir-empty">
 		<switch>
 			<case to="end">
-				${fs:exists(nameNode + "/user/" + wf:user() + "/" + landingDir) &&
+				${fs:exists(nameNode + "/user/" + wf:user() + "/" + landingDir) and
 					fs:dirSize(nameNode + "/user/" + wf:user() + "/" + landingDir) gt 0}
 			</case>
 			<default to="move-files-to-staging" />
