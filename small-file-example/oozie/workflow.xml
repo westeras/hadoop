@@ -6,8 +6,8 @@
 	<decision name="check-if-dir-empty">
 		<switch>
 			<case to="end">
-				${fs:exists(nameNode.concat("/user/").concat(wf:user()).concat("/").concat(landingDir)) and
-					fs:dirSize(nameNode.concat("/user/").concat(wf:user()).concat("/").concat(landingDir)) gt 0}
+				${fs:exists(concat(nameNode, concat("/user/", concat(wf:user(), concat("/", landingDir))))) and
+					fs:dirSize(concat(nameNode, concat("/user/", concat(wf:user(), concat("/", landingDir))))) gt 0}
 			</case>
 			<default to="move-files-to-staging" />
 		</switch>
