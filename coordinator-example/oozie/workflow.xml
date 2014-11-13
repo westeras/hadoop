@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <workflow-app xmlns="uri:oozie:workflow:0.2" name="handle-file-landing">
-	<start to="check-if-dir-empty"/>
+	<start to="run-aggregate-query"/>
 
 	<action name="run-aggregate-query">
 		<hive xmlns="uri:oozie:hive-action:0.2">
