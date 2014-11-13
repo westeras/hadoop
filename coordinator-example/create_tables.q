@@ -7,7 +7,7 @@ CREATE EXTERNAL TABLE daily_data_table (
 	c			INT,
 	d			INT)
 
-	LOCATION coordinator-example/landing/;
+	LOCATION "coordinator-example/landing/";
 
 CREATE TABLE weekly_aggregate_table (
 	date		BIGINT,
