@@ -1,8 +1,13 @@
-CREATE TABLE daily_data_table (
+DROP TABLE IF EXISTS daily_data_table;
+DROP TABLE IF EXISTS daily_data_table;
+
+CREATE EXTERNAL TABLE daily_data_table (
 	a			INT,
 	b			INT,
 	c			INT,
-	d			INT);
+	d			INT)
+
+	LOCATION coordinator-example/landing/;
 
 CREATE TABLE weekly_aggregate_table (
 	date		BIGINT,
