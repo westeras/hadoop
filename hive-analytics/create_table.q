@@ -1,9 +1,11 @@
+DROP TABLE IF EXISTS test;
+
 CREATE TABLE test (
 	id	INT,
 	a	INT,
 	b	INT)
 
 	ROW FORMAT DELIMITED
-		FIELDS TERMINATED BY ','
+		FIELDS TERMINATED BY ',';
 
-	LOCATION '/user/root/testdat.csv';
+LOAD DATA INPATH '/user/root/testdat.csv' OVERWRITE INTO TABLE test;
