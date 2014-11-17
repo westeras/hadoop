@@ -1,7 +1,2 @@
---SELECT AVG(a) FROM 
---	(SELECT PERCENTILE(a, 0.2) AS p1, PERCENTILE(a, 0.8) AS p2
---		FROM test) percentiles JOIN test
---	WHERE a > percentiles.p1 AND a < percentiles.p2
-
-SELECT AVG(a) FROM test
-	WHERE a > (SELECT PERCENTILE(a, 0.2) FROM test) AND a < (SELECT PERCENTILE(a, 0.8) FROM test);
+SELECT AVG(a) FROM (SELECT PERCENTILE(a, array(0.1, 0.9)) AS q FROM test) src JOIN test
+	WHERE a > src.q[0] AND a < src.q[1];
