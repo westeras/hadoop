@@ -1,1 +1,1 @@
-SELECT AVG(b) FROM test;
+SELECT AVG(a) FROM test;
