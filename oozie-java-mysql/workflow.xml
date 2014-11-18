@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="handle-file-landing">
+    <start to="java-action"/>
+
+    <action name="">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                     <name>mapred.queue.name</name>
+                     <value>default</value>
+                </property>
+            </configuration>
+            <main-class>${javaMainClass}</main-class>
+            <file>${jarFile}</file>
+            <file>mysql-connector-java-5.1.17.jar</file>
+        </java>
+
+        <ok to="end" />
+        <error to="fail" />
+    </action>
+
+    <kill name="fail">
+        <message>error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+
+    <end name="end"/>
+</workflow-app>
