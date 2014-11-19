@@ -29,24 +29,6 @@
 		<error to="fail" />
 	</action>
 
-	<action name="create-external-table">
-		<hive xmlns="uri:oozie:hive-action:0.2">
-			<job-tracker>${jobTracker}</job-tracker>
-			<name-node>${nameNode}</name-node>
-			<job-xml>hive-site.xml</job-xml>
-            <configuration>
-                <property>
-                    <name>mapred.job.queue.name</name>
-                    <value>${queueName}</value>
-                </property>
-            </configuration>
-            <script>create_external_table.q</script>
-        	<param>STAGING=/user/${wf:user()}/${stagingDir}</param>
-		</hive>		
-		<ok to="dump-to-managed-orc-table" />
-		<error to="fail" />
-	</action>
-
 	<action name="dump-to-managed-orc-table">
 		<hive xmlns="uri:oozie:hive-action:0.2">
             <job-tracker>${jobTracker}</job-tracker>
