@@ -25,7 +25,7 @@
 		<fs>
 			<mkdir path="${nameNode}/user/${wf:user()}/${landingDir}" />
 		</fs>
-		<ok to="create-external-table" />
+		<ok to="dump-to-managed-orc-table" />
 		<error to="fail" />
 	</action>
 
