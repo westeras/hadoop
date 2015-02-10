@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="handle-file-landing">
+	<start to="mean"/>
+
+	<action name="mean">
+		<hive xmlns="uri:oozie:hive-action:0.2">
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<job-xml>hive-site.xml</job-xml>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <script>mean.q</script>
+			<param>TABLE=${table}</param>
+			<param>COLUMN=${column}</param>
+		</hive>		
+		<ok to="median" />
+		<error to="fail" />
+	</action>
+	
+	<action name="median">
+		<hive xmlns="uri:oozie:hive-action:0.2">
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<job-xml>hive-site.xml</job-xml>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <script>median.q</script>
+			<param>TABLE=${table}</param>
+			<param>COLUMN=${column}</param>
+		</hive>		
+		<ok to="min_max" />
+		<error to="fail" />
+	</action>
+	
+	<action name="min_max">
+		<hive xmlns="uri:oozie:hive-action:0.2">
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<job-xml>hive-site.xml</job-xml>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <script>min_max.q</script>
+			<param>TABLE=${table}</param>
+			<param>COLUMN=${column}</param>
+		</hive>		
+		<ok to="quartiles" />
+		<error to="fail" />
+	</action>
+	
+	<action name="quartiles">
+		<hive xmlns="uri:oozie:hive-action:0.2">
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<job-xml>hive-site.xml</job-xml>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <script>quartiles.q</script>
+			<param>TABLE=${table}</param>
+			<param>COLUMN=${column}</param>
+		</hive>		
+		<ok to="standard_deviation" />
+		<error to="fail" />
+	</action>
+	
+	<action name="standard_deviation">
+		<hive xmlns="uri:oozie:hive-action:0.2">
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<job-xml>hive-site.xml</job-xml>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <script>standard_deviation.q</script>
+			<param>TABLE=${table}</param>
+			<param>COLUMN=${column}</param>
+		</hive>		
+		<ok to="trimmed_mean" />
+		<error to="fail" />
+	</action>
+	
+	<action name="trimmed_mean">
+		<hive xmlns="uri:oozie:hive-action:0.2">
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<job-xml>hive-site.xml</job-xml>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <script>trimmed_mean.q</script>
+			<param>TABLE=${table}</param>
+			<param>COLUMN=${column}</param>
+		</hive>		
+		<ok to="end" />
+		<error to="fail" />
+	</action>
+
+	<kill name="fail">
+        <message>error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+
+	<end name="end"/>
+</workflow-app>
