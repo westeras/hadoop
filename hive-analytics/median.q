@@ -1,1 +1,0 @@
-SELECT PERCENTILE(a, 0.5) FROM test;

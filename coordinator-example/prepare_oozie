@@ -1,4 +1,0 @@
-#!/bin/bash
-
-hdfs dfs -rm coordinator-example/oozie/*
-hdfs dfs -put oozie/* coordinator-example/oozie

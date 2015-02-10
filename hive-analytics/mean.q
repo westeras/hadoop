@@ -1,1 +1,0 @@
-SELECT AVG(a) FROM test;
