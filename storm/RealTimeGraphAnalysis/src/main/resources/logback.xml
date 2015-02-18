@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appender name="KAFKA" class="com.avalonconsult.KafkaAppender">
+        <topic>tweets</topic>
+        <brokerList>node-1:6667,node-3:6667</brokerList>
+        <formatter class="com.avalonconsult.JsonFormatter">
+            <expectJson>true</expectJson>
+        </formatter>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- By default, encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.avalonconsult.TwitterStatusListener" level="INFO" additivity="false">
+        <appender-ref ref="KAFKA" />
+    </logger>
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
